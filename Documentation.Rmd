@@ -1,0 +1,69 @@
+---
+title: "Documentation for MPG Predictor"
+author: "sarigela"
+date: "Wednesday, December 17, 2014"
+output: html_document
+---
+
+### Description:  
+This Shiny app predicts the Mile Per Gallon (MPG) of a car based on some of inputs that the user provides for his car.  This page is very reactive and any change in input values updates the MPG prediction instantaneously.
+
+Update any input value and check the **Mile Per Gallon for this car** value in the main pannel changing to the input selected.
+ 
+### Inputs: 
+The required entires for this Shinny app to work are: 
+
+- Weight of the car, 
+- 1/4 th Mile time,
+- Transmission Type.
+
+The Shiny app contains two page and the description of the pages are as below:
+
+### UI.R Page:
+      
+      SIDE BAR PANNEL:  This has below information.
+      
+      LINK: A link to this documentation is present on the side bar.
+      
+      INPUT: Required entires of the car are
+          1)  Weight of the car, 
+          2)  1/4 th Mile time,
+          3)  Transmission Type.
+          
+      COMPUTATIONS PERFORMED FOR SIDE BAR:
+          1) Setting the min and max values for Weight Slider.
+          2) Setting the min and max values for QSec Slider.  
+          
+          
+      
+      MAIN PANNEL: This shows the selected input and also the below.
+      
+      OUTPUT:
+          Predicted Mile Per Gallon for this car.
+
+      Static Output: Prediction RMSE is probably between the error ranges.
+          1) Root Mean Square Error of Testing set.
+          2) Root Mean Square Error of Trainng set.
+
+      
+      
+          
+
+### Server.R Page:
+
+**Description:** The server side code the computes MPG prediction based on **mtcars** data set.
+
+      MTCARS data set is used to create a 'LM' model based on the
+      predictors - weight, qsec and transmission type.  An offline
+      computation is already performed to determine the best fit model.
+      Based on that the best model is mpg ~ am:wt + am:qsec. 
+      The R^2 = 0.8946 which means the model captures 89.5% variance, 
+      proving this model to be the best model.
+
+    Computations Performed in this page:
+      1) Conversion of car weight from lb/1000 into actual lbs.
+      2) Data partion of mtcars data into Training and Test sets.
+      3) Root Mean square errors for test and training sets.
+      4) Linear model creation.
+      5) Fucntion that predicts MPG based on input values using LM Model.
+      
