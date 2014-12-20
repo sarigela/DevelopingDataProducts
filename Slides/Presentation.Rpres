@@ -1,0 +1,107 @@
+Car MPG Predictor
+========================================================
+author: sarigela
+date:  `r date()`
+transition: rotate
+
+
+![alt text](SeattleSeahawks.jpg)
+
+Slide presentation for 'Developing Data Products' Course Project
+
+What is 'Car MPG Predictor'?
+========================================================
+transition: fade
+This shiny app predicts the 'Mile Per Gallon' for a car taking the below inputs in side bar pannel:
+```{r, echo=FALSE, results='hide'}
+data(mtcars)
+```
+
+- Weight of car in lbs/1000 (Range: `r floor(min(mtcars$wt))`- `r ceiling(max(mtcars$wt))` )
+- Q-Sec (Range: `r floor(min(mtcars$qsec))`- `r ceiling(max(mtcars$qsec))` )
+- Transmission Type (Automatic/Manual)
+
+Two **Slider** controls exists in the app to collect first 2 inputs.  And a **drop down box** exists for Transmission type entry.
+
+Based on the inputs provided the "Predicted MPG" value is shown in the main pannel on right. The range of root mean square error for this prediction is also provided in main pannel. 
+
+[Click here to Navigate to App] (http://shankar.shinyapps.io/CourseProjectShiny/)
+
+
+
+Components of this App
+========================================================
+transition: linear
+incremental: true
+There are 2 main components (ui.r, server.r) and one minor component (documentation.Rmd) for this Shinny App.
+
+<h3>ui.R file </h3>
+
+- Reads inputs of car's feature values from User.
+- Shows the predictions computed on server side based on inputs.
+
+<h3>server.R file </h3>
+
+- Hosts the prediction algorithm which is the core for this App.
+- Refer <b>next slide</b> for <i>Prediction algorithm</i> details.
+
+<h3>Documentation file</h3>
+
+- [click here to read documentation] (http://shankar.shinyapps.io/CourseProjectShiny/Documentation.html)
+
+
+Prediction model with MTCARS  
+========================================================
+transition: concave
+**MTCARS** data set having **`r nrow(mtcars)`** data points is the backbone.
+The data set is partitioned into "Training" & "Test" data set.
+```{r echo=T, results='hide'}
+library(caret) 
+intrain <- createDataPartition(y=mtcars$mpg, p = 0.7, list = FALSE)
+training <- mtcars[intrain,]
+testing <- mtcars[-intrain, ]
+```
+Linear Regression model is built on input variables.
+```{r echo=T, eval = FALSE}
+fit1<-lm(mpg~am:wt+am:qsec, data=training)
+predict(fit1, newdata)
+```
+The R^2 is 0.8946 i.e., very good model with variance **89.5%**
+
+
+Embedded R code in Presentation
+========================================================
+transition: linear
+
+
+<small>
+Different type of transision per side.
+
+Slide 1:
+
+- **Date** is computed based on the current r date
+- Image of Seahawk in Title slide. 
+
+Slide 2: 
+
+- MTCARS data set is loaded silently.
+- The **min and max** values of weigth & qsec are computed.
+- **Clickable** like to App.
+
+***
+
+Slide 3:
+
+- HTML tags **h3, b and i** used
+- Clickable link to document
+- **Incremental** slide display
+
+Slide 4:
+
+- Number of data points in MTCARS data set is computed.
+- R code shown, one evaluating and other not (eval=F). 
+
+Slide 5:
+
+- Small Text
+- Two Column **Lay out**.</small>
